@@ -24,6 +24,7 @@ fun UserScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxSize(),
             navController = navController,
             paddingValues = paddingValues,
+            users = listOf()
         )
 
     }

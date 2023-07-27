@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Users SP</string>
+    <string name="empty_users_message">No hay usuarios para mostrar</string>
+    <string name="empty_users_action">Agrega uno para comenzar</string>
 </resources>
