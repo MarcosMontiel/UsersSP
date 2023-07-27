@@ -12,7 +12,6 @@ import com.marcosmontiel.userssp.presentation.screen.user.UserViewModel
 @Composable
 fun UserContent(
     modifier: Modifier,
-    viewModel: UserViewModel = hiltViewModel(),
     navController: NavHostController,
     paddingValues: PaddingValues,
 ) {
