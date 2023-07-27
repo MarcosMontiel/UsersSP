@@ -1,4 +1,4 @@
-package com.marcosmontiel.userssp.ui.theme
+package com.marcosmontiel.userssp.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
