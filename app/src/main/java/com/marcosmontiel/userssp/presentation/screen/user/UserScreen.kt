@@ -7,6 +7,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.marcosmontiel.userssp.domain.model.User
 import com.marcosmontiel.userssp.presentation.screen.user.component.UserContent
 
 @Composable
@@ -24,7 +25,10 @@ fun UserScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxSize(),
             navController = navController,
             paddingValues = paddingValues,
-            users = listOf()
+            users = listOf(
+                User(name = "Juan", lastName = "Juarez"),
+                User(name = "Maria", lastName = "Juarez")
+            )
         )
 
     }
