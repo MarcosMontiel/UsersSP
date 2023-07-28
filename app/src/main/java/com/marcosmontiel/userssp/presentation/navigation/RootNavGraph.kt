@@ -1,11 +1,12 @@
 package com.marcosmontiel.userssp.presentation.navigation
 
+import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun RootNavGraph(navController: NavHostController) {
+fun RootNavGraph(navController: NavHostController, preferences: SharedPreferences) {
 
     NavHost(
         navController = navController,
@@ -13,7 +14,7 @@ fun RootNavGraph(navController: NavHostController) {
         route = Graph.ROOT,
     ) {
 
-        homeNavGraph(navController = navController)
+        homeNavGraph(navController = navController, preferences = preferences)
 
     }
 

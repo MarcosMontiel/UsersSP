@@ -1,5 +1,6 @@
 package com.marcosmontiel.userssp.presentation.screen.user
 
+import android.content.SharedPreferences
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
@@ -11,7 +12,7 @@ import com.marcosmontiel.userssp.domain.model.User
 import com.marcosmontiel.userssp.presentation.screen.user.component.UserContent
 
 @Composable
-fun UserScreen(navController: NavHostController) {
+fun UserScreen(navController: NavHostController, preferences: SharedPreferences) {
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
 
@@ -24,6 +25,7 @@ fun UserScreen(navController: NavHostController) {
         UserContent(
             modifier = Modifier.fillMaxSize(),
             navController = navController,
+            preferences = preferences,
             paddingValues = paddingValues,
             users = listOf(
                 User(

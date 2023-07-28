@@ -1,5 +1,6 @@
 package com.marcosmontiel.userssp.presentation.screen.user.component
 
+import android.content.SharedPreferences
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
@@ -8,11 +9,13 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.marcosmontiel.userssp.R
 import com.marcosmontiel.userssp.domain.model.User
@@ -20,15 +23,22 @@ import com.marcosmontiel.userssp.presentation.component.DefaultAsyncImage
 import com.marcosmontiel.userssp.presentation.component.DefaultEmptyScreen
 import com.marcosmontiel.userssp.presentation.component.DefaultImage
 import com.marcosmontiel.userssp.presentation.component.DefaultText
+import com.marcosmontiel.userssp.presentation.screen.user.UserViewModel
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
 
 @Composable
 fun UserContent(
     modifier: Modifier,
     navController: NavHostController,
+    viewModel: UserViewModel = hiltViewModel(),
+    preferences: SharedPreferences,
     paddingValues: PaddingValues,
     users: List<User>,
 ) {
+
+    LaunchedEffect(Unit) {
+        viewModel.assignPreference(preferences)
+    }
 
     Box(modifier = modifier.padding(paddingValues)) {
 
