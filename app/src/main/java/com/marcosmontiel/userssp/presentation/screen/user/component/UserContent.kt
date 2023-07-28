@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.marcosmontiel.userssp.R
 import com.marcosmontiel.userssp.domain.model.User
+import com.marcosmontiel.userssp.presentation.component.DefaultAsyncImage
 import com.marcosmontiel.userssp.presentation.component.DefaultEmptyScreen
 import com.marcosmontiel.userssp.presentation.component.DefaultText
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
@@ -100,8 +102,16 @@ fun UserItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
+
+            if (user.url.isNotEmpty()) {
+
+                DefaultAsyncImage(modifier = Modifier.size(64.dp), image = user.url)
+
+            }
 
             DefaultText(text = "${user.name} ${user.lastName}")
 
