@@ -67,7 +67,7 @@ fun UserRecyclerView(
 
                 val size: Int = users.size - 1
                 val top: Dp = if (index == 0) 24.dp else 4.dp
-                val bottom: Dp = if (index == size) 80.dp else 4.dp
+                val bottom: Dp = if (index == size) 88.dp else 4.dp
 
                 UserItem(
                     modifier = Modifier.padding(
@@ -95,7 +95,9 @@ fun UserItem(
 ) {
 
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(88.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Gray800,
     ) {
@@ -109,11 +111,11 @@ fun UserItem(
 
             if (user.url.isNotEmpty()) {
 
-                DefaultAsyncImage(modifier = Modifier.size(64.dp), image = user.url)
+                DefaultAsyncImage(modifier = Modifier.size(56.dp), image = user.url)
 
             } else {
 
-                DefaultImage(modifier = Modifier.size(64.dp), image = R.drawable.ic_profile)
+                DefaultImage(modifier = Modifier.size(56.dp), image = R.drawable.ic_profile)
 
             }
 
