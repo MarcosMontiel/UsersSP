@@ -1,5 +1,7 @@
 package com.marcosmontiel.userssp.presentation.screen.user.component
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -97,7 +99,9 @@ fun UserItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(88.dp),
+            .height(88.dp)
+            .focusable()
+            .clickable { },
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Gray800,
     ) {
@@ -121,7 +125,7 @@ fun UserItem(
 
             Spacer(modifier = Modifier.size(16.dp))
 
-            DefaultText(text = "${user.name} ${user.lastName}")
+            DefaultText(text = user.getFullName())
 
         }
 
