@@ -16,6 +16,7 @@ import com.marcosmontiel.userssp.R
 import com.marcosmontiel.userssp.domain.model.User
 import com.marcosmontiel.userssp.presentation.component.DefaultAsyncImage
 import com.marcosmontiel.userssp.presentation.component.DefaultEmptyScreen
+import com.marcosmontiel.userssp.presentation.component.DefaultImage
 import com.marcosmontiel.userssp.presentation.component.DefaultText
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
 
@@ -103,7 +104,6 @@ fun UserItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
@@ -111,7 +111,13 @@ fun UserItem(
 
                 DefaultAsyncImage(modifier = Modifier.size(64.dp), image = user.url)
 
+            } else {
+
+                DefaultImage(modifier = Modifier.size(64.dp), image = R.drawable.ic_profile)
+
             }
+
+            Spacer(modifier = Modifier.size(16.dp))
 
             DefaultText(text = "${user.name} ${user.lastName}")
 
