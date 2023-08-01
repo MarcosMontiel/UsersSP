@@ -191,7 +191,7 @@ fun FirstTimeDialog(modifier: Modifier, viewModel: UserViewModel) {
                     modifier = Modifier.fillMaxWidth(),
                 ) {
 
-                    DefaultText(text = "Acepto")
+                    DefaultText(text = stringResource(R.string.generic_title_agree))
 
                 }
 
