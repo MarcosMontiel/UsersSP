@@ -1,18 +1,25 @@
 package com.marcosmontiel.userssp.presentation.screen.user.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.marcosmontiel.userssp.R
@@ -21,6 +28,7 @@ import com.marcosmontiel.userssp.presentation.component.DefaultAsyncImage
 import com.marcosmontiel.userssp.presentation.component.DefaultEmptyScreen
 import com.marcosmontiel.userssp.presentation.component.DefaultImage
 import com.marcosmontiel.userssp.presentation.component.DefaultText
+import com.marcosmontiel.userssp.presentation.screen.user.UserState
 import com.marcosmontiel.userssp.presentation.screen.user.UserViewModel
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
 
@@ -33,7 +41,15 @@ fun UserContent(
     users: List<User>,
 ) {
 
+    val state: UserState = viewModel.state
+
     Box(modifier = modifier.padding(paddingValues)) {
+
+        if (viewModel.isFirstTime && state.showTermsConditions) {
+
+            FirstTimeDialog(modifier = Modifier.fillMaxWidth(), viewModel = viewModel)
+
+        }
 
         if (users.isEmpty()) {
 
@@ -129,6 +145,57 @@ fun UserItem(
             Spacer(modifier = Modifier.size(16.dp))
 
             DefaultText(text = user.getFullName())
+
+        }
+
+    }
+
+}
+
+@Composable
+fun FirstTimeDialog(modifier: Modifier, viewModel: UserViewModel) {
+
+    Dialog(onDismissRequest = { viewModel.dismissDialog() }) {
+
+        Box(
+            modifier = modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(Gray800)
+                .padding(16.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+
+                DefaultText(
+                    fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.user_title_terms_conditions),
+                )
+
+                Divider(modifier = Modifier.padding(top = 8.dp, bottom = 16.dp))
+
+                DefaultText(
+                    style = MaterialTheme.typography.body2,
+                    text = stringResource(R.string.user_title_lorem_ipsum),
+                )
+
+                Spacer(modifier = Modifier.size(16.dp))
+
+                Button(
+                    onClick = {
+
+                        viewModel.dismissDialog()
+                        viewModel.hideTermsConditionsDialog()
+
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+
+                    DefaultText(text = "Acepto")
+
+                }
+
+            }
 
         }
 

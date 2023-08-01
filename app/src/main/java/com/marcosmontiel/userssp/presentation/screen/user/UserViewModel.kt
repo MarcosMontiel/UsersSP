@@ -2,7 +2,9 @@ package com.marcosmontiel.userssp.presentation.screen.user
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,15 +19,21 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
         Context.MODE_PRIVATE,
     )
 
-    init {
+    val isFirstTime = sharedPreferences.getBoolean("first_time", true)
 
-        val isFirstTime = sharedPreferences.getBoolean("first_time", true)
-        Log.i("UserViewModel", "$isFirstTime")
+    // State form
 
-        if (isFirstTime) {
-            sharedPreferences.edit().putBoolean("first_time", false).apply()
-        }
+    var state by mutableStateOf(UserState())
+        private set
 
+    // Events
+
+    fun dismissDialog() {
+        state = state.copy(showTermsConditions = false)
+    }
+
+    fun hideTermsConditionsDialog() {
+        sharedPreferences.edit().putBoolean("first_time", false).apply()
     }
 
 }
