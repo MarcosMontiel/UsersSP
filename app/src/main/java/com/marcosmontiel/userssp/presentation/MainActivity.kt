@@ -1,7 +1,5 @@
 package com.marcosmontiel.userssp.presentation
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var _preferences: SharedPreferences
     private lateinit var _navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,10 +30,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
 
-                    _preferences = getPreferences(Context.MODE_PRIVATE)
                     _navController = rememberNavController()
 
-                    RootNavGraph(navController = _navController, preferences = _preferences)
+                    RootNavGraph(navController = _navController)
 
                 }
             }

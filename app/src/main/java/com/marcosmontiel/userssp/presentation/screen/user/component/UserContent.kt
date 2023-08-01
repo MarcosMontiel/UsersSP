@@ -1,6 +1,5 @@
 package com.marcosmontiel.userssp.presentation.screen.user.component
 
-import android.content.SharedPreferences
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
@@ -9,7 +8,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,14 +29,9 @@ fun UserContent(
     modifier: Modifier,
     navController: NavHostController,
     viewModel: UserViewModel = hiltViewModel(),
-    preferences: SharedPreferences,
     paddingValues: PaddingValues,
     users: List<User>,
 ) {
-
-    LaunchedEffect(Unit) {
-        viewModel.assignPreference(preferences)
-    }
 
     Box(modifier = modifier.padding(paddingValues)) {
 
