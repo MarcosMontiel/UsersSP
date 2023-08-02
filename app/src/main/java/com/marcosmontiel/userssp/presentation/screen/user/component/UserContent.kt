@@ -176,7 +176,7 @@ fun AddUserDialog(modifier: Modifier, viewModel: UserViewModel, state: UserState
                 DefaultOutlinedTextField(
                     label = stringResource(R.string.user_title_username),
                     text = state.username,
-                    valueChange = { viewModel.valueChange(it) }
+                    valueChange = { viewModel.valueChange(maxLength = 20, username = it) }
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))

@@ -32,8 +32,14 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
         state = state.copy(showAddUserDialog = false)
     }
 
-    fun valueChange(username: String) {
-        state = state.copy(username = username)
+    fun valueChange(maxLength: Int, username: String) {
+
+        val value: String = username.let {
+            if (it.length > maxLength) it.slice(0 until maxLength) else it
+        }
+
+        state = state.copy(username = value)
+
     }
 
     fun hideDialog() {
