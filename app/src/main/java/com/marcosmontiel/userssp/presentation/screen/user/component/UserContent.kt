@@ -1,5 +1,7 @@
 package com.marcosmontiel.userssp.presentation.screen.user.component
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
@@ -7,12 +9,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -25,6 +27,7 @@ import com.marcosmontiel.userssp.domain.model.User
 import com.marcosmontiel.userssp.presentation.component.*
 import com.marcosmontiel.userssp.presentation.screen.user.UserState
 import com.marcosmontiel.userssp.presentation.screen.user.UserViewModel
+import com.marcosmontiel.userssp.presentation.ui.theme.Blue500
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
 
 @Composable
@@ -37,6 +40,8 @@ fun UserContent(
 ) {
 
     val state: UserState = viewModel.state
+    val context: Context = LocalContext.current
+    val username: String = viewModel.username ?: ""
 
     Box(modifier = modifier.padding(paddingValues)) {
 
@@ -45,8 +50,15 @@ fun UserContent(
             AddUserDialog(
                 modifier = Modifier.fillMaxWidth(),
                 viewModel = viewModel,
+                context = context,
                 state = state,
             )
+
+        }
+
+        if (username.isNotEmpty()) {
+
+            Toast.makeText(context, "Bienvenido, $username", Toast.LENGTH_LONG).show()
 
         }
 
@@ -152,7 +164,14 @@ fun UserItem(
 }
 
 @Composable
-fun AddUserDialog(modifier: Modifier, viewModel: UserViewModel, state: UserState) {
+fun AddUserDialog(
+    modifier: Modifier,
+    viewModel: UserViewModel,
+    context: Context,
+    state: UserState,
+) {
+
+    val errorMessage = stringResource(R.string.user_invalid_username)
 
     Dialog(onDismissRequest = { }) {
 
@@ -181,17 +200,32 @@ fun AddUserDialog(modifier: Modifier, viewModel: UserViewModel, state: UserState
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Button(
-                    onClick = {
+                Box(modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .align(Alignment.End)
+                    .clickable {
 
-                        viewModel.dismissDialog()
-                        viewModel.hideDialog()
+                        if (viewModel.state.username.isEmpty()) {
 
-                    },
-                    modifier = Modifier.fillMaxWidth(),
+                            Toast
+                                .makeText(context, errorMessage, Toast.LENGTH_LONG)
+                                .show()
+
+                        } else {
+
+                            viewModel.dismissDialog()
+
+                        }
+
+                    }
                 ) {
 
-                    DefaultText(text = stringResource(R.string.generic_title_insert))
+                    DefaultText(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        fontWeight = FontWeight.Bold,
+                        color = Blue500,
+                        text = stringResource(R.string.generic_title_register),
+                    )
 
                 }
 

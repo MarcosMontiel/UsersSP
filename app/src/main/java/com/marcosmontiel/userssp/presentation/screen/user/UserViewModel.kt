@@ -19,7 +19,8 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
         Context.MODE_PRIVATE,
     )
 
-    val isFirstTime = sharedPreferences.getBoolean("first_time", true)
+    val isFirstTime = sharedPreferences.getBoolean("user_first_time", true)
+    val username = sharedPreferences.getString("user_username_value", "")
 
     // State form
 
@@ -30,6 +31,8 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
 
     fun dismissDialog() {
         state = state.copy(showAddUserDialog = false)
+        sharedPreferences.edit().putBoolean("user_first_time", false).apply()
+        sharedPreferences.edit().putString("user_username_value", state.username).apply()
     }
 
     fun valueChange(maxLength: Int, username: String) {
@@ -40,10 +43,6 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
 
         state = state.copy(username = value)
 
-    }
-
-    fun hideDialog() {
-        sharedPreferences.edit().putBoolean("first_time", false).apply()
     }
 
 }
