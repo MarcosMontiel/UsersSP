@@ -155,7 +155,7 @@ fun UserItem(
 @Composable
 fun FirstTimeDialog(modifier: Modifier, viewModel: UserViewModel) {
 
-    Dialog(onDismissRequest = { viewModel.dismissDialog() }) {
+    Dialog(onDismissRequest = { }) {
 
         Box(
             modifier = modifier
