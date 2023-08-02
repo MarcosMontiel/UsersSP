@@ -9,8 +9,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,10 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.marcosmontiel.userssp.R
 import com.marcosmontiel.userssp.domain.model.User
-import com.marcosmontiel.userssp.presentation.component.DefaultAsyncImage
-import com.marcosmontiel.userssp.presentation.component.DefaultEmptyScreen
-import com.marcosmontiel.userssp.presentation.component.DefaultImage
-import com.marcosmontiel.userssp.presentation.component.DefaultText
+import com.marcosmontiel.userssp.presentation.component.*
 import com.marcosmontiel.userssp.presentation.screen.user.UserState
 import com.marcosmontiel.userssp.presentation.screen.user.UserViewModel
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
@@ -45,9 +40,13 @@ fun UserContent(
 
     Box(modifier = modifier.padding(paddingValues)) {
 
-        if (viewModel.isFirstTime && state.showTermsConditions) {
+        if (viewModel.isFirstTime && state.showAddUserDialog) {
 
-            FirstTimeDialog(modifier = Modifier.fillMaxWidth(), viewModel = viewModel)
+            AddUserDialog(
+                modifier = Modifier.fillMaxWidth(),
+                viewModel = viewModel,
+                state = state,
+            )
 
         }
 
@@ -153,7 +152,7 @@ fun UserItem(
 }
 
 @Composable
-fun FirstTimeDialog(modifier: Modifier, viewModel: UserViewModel) {
+fun AddUserDialog(modifier: Modifier, viewModel: UserViewModel, state: UserState) {
 
     Dialog(onDismissRequest = { }) {
 
@@ -169,14 +168,15 @@ fun FirstTimeDialog(modifier: Modifier, viewModel: UserViewModel) {
 
                 DefaultText(
                     fontWeight = FontWeight.Bold,
-                    text = stringResource(R.string.user_title_terms_conditions),
+                    text = stringResource(R.string.user_title_user_register),
                 )
 
-                Divider(modifier = Modifier.padding(top = 8.dp, bottom = 16.dp))
+                Spacer(modifier = Modifier.size(24.dp))
 
-                DefaultText(
-                    style = MaterialTheme.typography.body2,
-                    text = stringResource(R.string.user_title_lorem_ipsum),
+                DefaultOutlinedTextField(
+                    label = stringResource(R.string.user_title_username),
+                    text = state.username,
+                    valueChange = { viewModel.valueChange(it) }
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
@@ -185,13 +185,13 @@ fun FirstTimeDialog(modifier: Modifier, viewModel: UserViewModel) {
                     onClick = {
 
                         viewModel.dismissDialog()
-                        viewModel.hideTermsConditionsDialog()
+                        viewModel.hideDialog()
 
                     },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
 
-                    DefaultText(text = stringResource(R.string.generic_title_agree))
+                    DefaultText(text = stringResource(R.string.generic_title_insert))
 
                 }
 

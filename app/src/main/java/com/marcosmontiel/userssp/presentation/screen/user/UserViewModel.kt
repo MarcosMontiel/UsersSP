@@ -29,10 +29,14 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
     // Events
 
     fun dismissDialog() {
-        state = state.copy(showTermsConditions = false)
+        state = state.copy(showAddUserDialog = false)
     }
 
-    fun hideTermsConditionsDialog() {
+    fun valueChange(username: String) {
+        state = state.copy(username = username)
+    }
+
+    fun hideDialog() {
         sharedPreferences.edit().putBoolean("first_time", false).apply()
     }
 
