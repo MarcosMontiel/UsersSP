@@ -1,6 +1,5 @@
 package com.marcosmontiel.userssp.presentation.screen.user.component
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +39,6 @@ fun UserContent(
 ) {
 
     val state: UserState = viewModel.state
-    val context: Context = LocalContext.current
     val username: String = viewModel.username ?: ""
 
     Box(modifier = modifier.padding(paddingValues)) {
@@ -50,7 +48,6 @@ fun UserContent(
             AddUserDialog(
                 modifier = Modifier.fillMaxWidth(),
                 viewModel = viewModel,
-                context = context,
                 state = state,
             )
 
@@ -58,7 +55,7 @@ fun UserContent(
 
         if (username.isNotEmpty()) {
 
-            Toast.makeText(context, "Bienvenido, $username", Toast.LENGTH_LONG).show()
+            Toast.makeText(LocalContext.current, "Bienvenido, $username", Toast.LENGTH_LONG).show()
 
         }
 
@@ -167,7 +164,6 @@ fun UserItem(
 fun AddUserDialog(
     modifier: Modifier,
     viewModel: UserViewModel,
-    context: Context,
     state: UserState,
 ) {
 
@@ -205,17 +201,7 @@ fun AddUserDialog(
                     .align(Alignment.End)
                     .clickable {
 
-                        if (viewModel.state.username.isEmpty()) {
-
-                            Toast
-                                .makeText(context, errorMessage, Toast.LENGTH_LONG)
-                                .show()
-
-                        } else {
-
-                            viewModel.dismissDialog()
-
-                        }
+                        viewModel.saveUser(errorMessage = errorMessage)
 
                     }
                 ) {

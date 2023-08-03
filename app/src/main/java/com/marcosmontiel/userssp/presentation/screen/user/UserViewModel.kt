@@ -2,6 +2,7 @@ package com.marcosmontiel.userssp.presentation.screen.user
 
 import android.app.Application
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(application: Application) : ViewModel() {
+class UserViewModel @Inject constructor(private val application: Application) : ViewModel() {
 
     // Shared Preferences
 
@@ -29,7 +30,13 @@ class UserViewModel @Inject constructor(application: Application) : ViewModel() 
 
     // Events
 
-    fun dismissDialog() {
+    fun saveUser(errorMessage: String) {
+
+        if (state.username.isEmpty()) {
+            Toast.makeText(application.applicationContext, errorMessage, Toast.LENGTH_LONG).show()
+            return
+        }
+
         state = state.copy(showAddUserDialog = false)
         sharedPreferences.edit().putBoolean("user_first_time", false).apply()
         sharedPreferences.edit().putString("user_username_value", state.username).apply()
