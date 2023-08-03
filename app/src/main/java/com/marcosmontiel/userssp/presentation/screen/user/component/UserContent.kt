@@ -4,19 +4,24 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +33,10 @@ import com.marcosmontiel.userssp.presentation.screen.user.UserState
 import com.marcosmontiel.userssp.presentation.screen.user.UserViewModel
 import com.marcosmontiel.userssp.presentation.ui.theme.Blue500
 import com.marcosmontiel.userssp.presentation.ui.theme.Gray800
+import com.marcosmontiel.userssp.presentation.ui.theme.Red400
+import kotlin.math.roundToInt
 
+@ExperimentalMaterialApi
 @Composable
 fun UserContent(
     modifier: Modifier,
@@ -81,6 +89,7 @@ fun UserContent(
 
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun UserRecyclerView(
     modifier: Modifier,
@@ -116,6 +125,7 @@ fun UserRecyclerView(
 
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun UserItem(
     modifier: Modifier,
@@ -123,36 +133,72 @@ fun UserItem(
     user: User,
 ) {
 
-    Card(
+    val squareSize = 88.dp
+    val swipeableState = rememberSwipeableState(0)
+    val sizePx = with(LocalDensity.current) { squareSize.toPx() }
+    val anchors = mapOf(0f to 0, sizePx to 1)
+
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .height(88.dp)
-            .focusable()
-            .clickable { },
-        shape = RoundedCornerShape(8.dp),
-        backgroundColor = Gray800,
+            .background(Gray800)
+            .swipeable(
+                state = swipeableState,
+                anchors = anchors,
+                thresholds = { _, _ -> FractionalThreshold(0.3f) },
+                orientation = Orientation.Horizontal,
+            ),
     ) {
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        if (swipeableState.offset.value > 0f) {
 
-            if (user.url.isNotEmpty()) {
-
-                DefaultAsyncImage(modifier = Modifier.size(56.dp), image = user.url)
-
-            } else {
-
-                DefaultImage(modifier = Modifier.size(56.dp), image = R.drawable.ic_profile)
-
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(88.dp)
+                    .background(Red400)
+                    .focusable()
+                    .clickable { },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(imageVector = Icons.Rounded.Delete, contentDescription = "delete icon")
             }
 
-            Spacer(modifier = Modifier.size(16.dp))
+        }
 
-            DefaultText(text = user.getFullName())
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .focusable()
+                .clickable { }
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .offset {
+                        IntOffset(swipeableState.offset.value.roundToInt(), 0)
+                    },
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                if (user.url.isNotEmpty()) {
+
+                    DefaultAsyncImage(modifier = Modifier.size(56.dp), image = user.url)
+
+                } else {
+
+                    DefaultImage(modifier = Modifier.size(56.dp), image = R.drawable.ic_profile)
+
+                }
+
+                Spacer(modifier = Modifier.size(16.dp))
+
+                DefaultText(text = user.getFullName())
+
+            }
 
         }
 
