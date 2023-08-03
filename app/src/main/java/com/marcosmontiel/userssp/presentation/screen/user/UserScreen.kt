@@ -62,7 +62,7 @@ fun UserScreen(navController: NavHostController) {
         },
         bottomBar = {
 
-            BottomAppBar() {
+            BottomAppBar {
 
             }
 
