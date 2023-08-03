@@ -32,7 +32,7 @@ class UserViewModel @Inject constructor(private val application: Application) : 
 
     fun saveUser(errorMessage: String) {
 
-        if (state.username.isEmpty()) {
+        if (state.username.isEmpty() || state.username.isBlank()) {
             Toast.makeText(application.applicationContext, errorMessage, Toast.LENGTH_LONG).show()
             return
         }
