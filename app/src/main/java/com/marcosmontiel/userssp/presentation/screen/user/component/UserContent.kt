@@ -188,20 +188,16 @@ fun UserItem(
 
         }
 
-        if (swipeableState.offset.value > 0f) {
-
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(88.dp)
-                    .background(Red400)
-                    .focusable()
-                    .clickable { },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(imageVector = Icons.Rounded.Delete, contentDescription = "delete icon")
-            }
-
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(swipeableState.offset.value.dp / 3)
+                .background(Red400)
+                .focusable()
+                .clickable { },
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(imageVector = Icons.Rounded.Delete, contentDescription = "delete icon")
         }
 
     }
