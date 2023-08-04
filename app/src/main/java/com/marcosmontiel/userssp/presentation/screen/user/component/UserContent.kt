@@ -110,9 +110,9 @@ fun UserRecyclerView(
                 UserItem(
                     modifier = Modifier.padding(
                         top = top,
-                        end = 8.dp,
+                        end = 0.dp,
                         bottom = bottom,
-                        start = 8.dp
+                        start = 0.dp
                     ),
                     navController = navController,
                     user = item,
@@ -148,28 +148,16 @@ fun UserItem(
                 anchors = anchors,
                 thresholds = { _, _ -> FractionalThreshold(0.3f) },
                 orientation = Orientation.Horizontal,
-            ),
+            )
     ) {
-
-        if (swipeableState.offset.value > 0f) {
-
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(88.dp)
-                    .background(Red400)
-                    .focusable()
-                    .clickable { },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(imageVector = Icons.Rounded.Delete, contentDescription = "delete icon")
-            }
-
-        }
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Gray800)
+                .offset {
+                    IntOffset(swipeableState.offset.value.roundToInt(), 0)
+                }
                 .focusable()
                 .clickable { }
         ) {
@@ -177,10 +165,7 @@ fun UserItem(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
-                    .offset {
-                        IntOffset(swipeableState.offset.value.roundToInt(), 0)
-                    },
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
@@ -198,6 +183,23 @@ fun UserItem(
 
                 DefaultText(text = user.getFullName())
 
+            }
+
+
+        }
+
+        if (swipeableState.offset.value > 0f) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(88.dp)
+                    .background(Red400)
+                    .focusable()
+                    .clickable { },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(imageVector = Icons.Rounded.Delete, contentDescription = "delete icon")
             }
 
         }
