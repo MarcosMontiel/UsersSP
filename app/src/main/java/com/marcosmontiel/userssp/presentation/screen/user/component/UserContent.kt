@@ -138,6 +138,8 @@ fun UserItem(
     val sizePx = with(LocalDensity.current) { squareSize.toPx() }
     val anchors = mapOf(0f to 0, sizePx to 1)
 
+    val swipeDp = swipeableState.offset.value.dp / 3
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -191,7 +193,7 @@ fun UserItem(
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(swipeableState.offset.value.dp / 3)
+                .width(if (swipeDp > squareSize) squareSize else swipeDp)
                 .background(Red400)
                 .focusable()
                 .clickable { },
