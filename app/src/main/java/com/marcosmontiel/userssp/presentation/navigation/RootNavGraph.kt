@@ -1,9 +1,11 @@
 package com.marcosmontiel.userssp.presentation.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
+@ExperimentalMaterialApi
 @Composable
 fun RootNavGraph(navController: NavHostController) {
 

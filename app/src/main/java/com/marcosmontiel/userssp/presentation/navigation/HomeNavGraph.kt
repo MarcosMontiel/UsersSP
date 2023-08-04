@@ -1,5 +1,6 @@
 package com.marcosmontiel.userssp.presentation.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -7,6 +8,7 @@ import androidx.navigation.navigation
 import com.marcosmontiel.userssp.presentation.navigation.HomeRoutes.Users
 import com.marcosmontiel.userssp.presentation.screen.user.UserScreen
 
+@ExperimentalMaterialApi
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
     navigation(startDestination = Users.route, route = Graph.HOME) {
 

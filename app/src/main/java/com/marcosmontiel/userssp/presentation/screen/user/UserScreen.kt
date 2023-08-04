@@ -14,6 +14,7 @@ import com.marcosmontiel.userssp.domain.model.User
 import com.marcosmontiel.userssp.presentation.screen.user.component.UserContent
 import com.marcosmontiel.userssp.presentation.ui.theme.Blue500
 
+@ExperimentalMaterialApi
 @Composable
 fun UserScreen(navController: NavHostController) {
 
